@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Escape Game – Mission Enzym (Freischaltung)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root { --accent: #3f51b5; }
+    body { font-family: system-ui, Arial, sans-serif; margin: 0; background: #f7f7fb; color: #222; }
+    header { position: sticky; top: 0; background: white; border-bottom: 1px solid #e5e5ee; padding: 12px 16px; z-index: 100; }
+    .wrap { max-width: 900px; margin: 0 auto; padding: 0 16px; }
+    .title { display: flex; align-items: center; gap: 12px; }
+    .progress { height: 8px; background: #eaeaf3; border-radius: 999px; overflow: hidden; margin-top: 10px; }
+    .bar { height: 100%; width: 0%; background: var(--accent); transition: width .3s ease; }
+    .station { display: none; padding: 24px 0 220px; scroll-margin-bottom: 240px; }
+    .station.active { display: block; }
+    .navline { position: fixed; left: 0; right: 0; bottom: 0; background: white; border-top: 1px solid #e5e5ee; }
+    .navline .wrap { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 10px 16px; }
+    button.nav { border: none; padding: 12px 16px; border-radius: 10px; background: var(--accent); color: white; cursor: pointer; font-weight: 600; }
+    button.nav[disabled] { background: #c5cae9; cursor: not-allowed; }
+    .step { font-size: 14px; color: #555; }
+  
+/* --- Mobile Enhancements --- */
+@media (max-width: 640px) {
+  .wrap { padding: 0 12px; }
+  header .title h1 { font-size: 1rem; }
+  .step { font-size: 12px; }
+  .station { padding: 16px 0 260px; } /* extra bottom so footer won't cover inputs */
+  .task { padding: 14px !important; }
+  input, select, button { font-size: 16px !important; } /* prevent iOS zoom */
+  .choice-button, button { min-height: 44px; }
+  .navline .wrap { gap: 6px; }
+  button.nav { flex: 1; min-height: 48px; font-size: 16px; }
+  blockquote { margin: 8px 0; padding-left: 12px; }
+  .dropzone { min-width: auto !important; width: 100% !important; min-height: 64px !important; }
+}
+
+/* Improve focus & tap targets */
+button, .choice-button {
+  touch-action: manipulation;
+}
+
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="title">
+      <span>🎮</span>
+      <h1 style="margin:0;font-size:1.1rem;">Escape Game: Mission Enzym</h1>
+    </div>
+    <div class="progress" aria-hidden="true"><div id="progressBar" class="bar"></div></div>
+    <div class="step"><span id="stepLabel">Station 1 / 7</span></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+
+<section class="station" data-step="0">
+  <div style="display:flex; flex-direction:column; gap:16px; align-items:center; text-align:center; padding:24px 0 120px;">
+    <h2 style="margin: 8px 0 0;">Escape Game: Enzym im Eis – die biologische Uhr tickt</h2>
+    <div style="max-width:840px; text-align:left; background:white; border:1px solid #e5e5ee; border-radius:12px; padding:16px 18px; line-height:1.55;">
+      <h3 style="margin-top:0;">Hintergrundgeschichte</h3>
+      <p>Bei einer Arktis-Expedition haben Forschende ein uraltes Enzym in einem eingefrorenen Bakterium entdeckt. Erste Analysen zeigen: Dieses Enzym könnte Krankheiten heilen und industrielle Reaktionen revolutionieren.</p>
+      <p>Doch bevor es isoliert und aktiviert werden konnte, kam es zu einem Zwischenfall:</p>
+      <p><strong>Ein plötzlicher Temperaturabfall hat das Labor versiegelt.</strong> Das Enzym droht endgültig zerstört zu werden, wenn es nicht innerhalb der nächsten <strong>30 Minuten</strong> reaktiviert wird.</p>
+      <p>Zum Glück wurde ein Sicherheitsprotokoll aktiviert: <em>Ein digitales Escape Game</em>, das nur von einer Person mit echtem Enzym-Verständnis geknackt werden kann.</p>
+      <p style="margin: 0.6rem 0 0;"><strong>So geht's weiter:</strong> Lies die Aufgaben an jeder Station, löse sie korrekt und klicke dann unten rechts auf <em>Weiter</em>. Viel Erfolg!</p>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="station" data-step="0">
+  <div class="task" style="background:white; padding:2rem; border-radius:12px; box-shadow:0 4px 8px rgba(0,0,0,0.1); max-width:700px; margin:auto;">
+    <h2>🧊 Hintergrundgeschichte</h2>
+    <p>Bei einer Arktis-Expedition haben Forschende ein uraltes Enzym in einem eingefrorenen Bakterium entdeckt. Erste Analysen zeigen: Dieses Enzym könnte Krankheiten heilen und industrielle Reaktionen revolutionieren.</p>
+    <p>Doch bevor es isoliert und aktiviert werden konnte, kam es zu einem Zwischenfall:</p>
+    <p><strong>Ein plötzlicher Temperaturabfall hat das Labor versiegelt. Das Enzym droht endgültig zerstört zu werden, wenn es nicht innerhalb der nächsten <span style="color:red;">XX</span> Minuten reaktiviert wird.</strong></p>
+    <p>Zum Glück wurde ein Sicherheitsprotokoll aktiviert:</p>
+    <blockquote style="font-style:italic;">Ein digitales Escape Game, das nur von einer Person mit echtem Enzym-Verständnis geknackt werden kann.</blockquote>
+    <p style="text-align:center; font-weight:bold;">Deine Mission: Löse alle Rätsel und rette das Enzym!</p>
+  </div>
+</section>
+
+<section class="station" data-step="1">
+
+
+
+
+  <meta charset="UTF-8">
+  <title>Escape Game – Station 1: Aminosäuren sortieren</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background-color: #f4f6f8; }
+    h1 { color: #2c3e50; }
+    .task { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    .draggable, .dropzone { padding: 10px; margin: 5px; border: 1px dashed #aaa; background: #e3f2fd; border-radius: 5px; display: inline-block; cursor: move; }
+    .dropzone { min-width: 300px; min-height: 50px; background: #fff; border: 2px dashed #42a5f5; }
+    .feedback { margin-top: 10px; font-weight: bold; }
+    .hidden { display: none; }
+    .hilfekarte { background: #e1f5fe; padding: 15px; margin-top: 20px; border-radius: 10px; }
+    #input-section { margin-top: 2rem; }
+    #input-section input { width: 80%; height: 60px; font-size: 1.2rem; }
+  </style>
+
+
+
+<h1>🧬 Escape Game – Station 1: Aminosäuren sortieren</h1>
+<div class="task">
+  <p>Aufgabe: Bringe die folgenden Aminosäuren anhand ihrer Seitenketten in die richtige Reihenfolge.</p>
+  <blockquote>
+    „Der leichteste Baustein beginnt die Reaktion. Es folgt der Methylierte. Danach der, der polar reagiert. Ganz zuletzt treffen die Gegensätze aufeinander: der Saure vor dem Basischen.“
+  </blockquote>
+
+  <div id="dragzone">
+    <div class="draggable" draggable="true">Asparaginsäure</div>
+    <div class="draggable" draggable="true">Lysin</div>
+    <div class="draggable" draggable="true">Glycin</div>
+    <div class="draggable" draggable="true">Serin</div>
+    <div class="draggable" draggable="true">Alanin</div>
+  </div>
+
+  <h3>Aminosäuren-Reihenfolge:</h3>
+  <div id="dropzone" class="dropzone"></div>
+  <button onclick="s1_checkOrder()">Reihenfolge prüfen</button>
+  <p id="hinweis" class="feedback"></p>
+
+  <p><a href="#" onclick="document.getElementById('hilfeKarte').classList.remove('hidden'); return false;">🆘 Hilfekarte 1 anzeigen</a></p>
+  <div id="quersummeHint" class="hidden">
+    <p>🔍 Bilde die Summe aller Sauerstoffatome und daraus die Quersumme</p>
+    <input id="eingabe" placeholder="Zahl eingeben">
+    <button onclick="s1_checkCode()">Antwort prüfen</button>
+    <p id="feedback"></p>
+    <p><a href="#" onclick="document.getElementById('hilfeKarte2').style.display='block'; return false;">🆘 </a></p>
+  </div>
+
+  <div id="hilfeKarte" class="hilfekarte hidden">
+    <p>🆘 Hilfekarte: Mit Glycin beginnt es und mit Lysin hört es auf.</p>
+  </div>
+</div>
+
+<script>
+const richtigeReihenfolge = ["Glycin", "Alanin", "Serin", "Asparaginsäure", "Lysin"];
+
+function s1_checkOrder() {
+  const dropzone = document.getElementById("dropzone");
+  const items = Array.from(dropzone.children).map(el => el.textContent.trim());
+  const hinweis = document.getElementById("hinweis");
+
+  const quersummeHint = document.getElementById("quersummeHint");
+  const hilfeKarte2 = document.getElementById("hilfeKarte2");
+
+  const hilfekarte = document.getElementById("hilfeKarte");
+
+  if (JSON.stringify(items) === JSON.stringify(richtigeReihenfolge)) {
+    hinweis.innerText = "✔️ Die Reihenfolge stimmt!";
+    quersummeHint.classList.remove("hidden");
+    hilfekarte.classList.add("hidden");  // Hilfekarte ausblenden, wenn die Reihenfolge stimmt
+  } else {
+    hinweis.innerText = "❌ Die Reihenfolge ist noch nicht korrekt.";
+    quersummeHint.classList.add("hidden");
+      // Hilfekarte anzeigen, wenn die Reihenfolge falsch ist
+  }
+}
+
+function s1_checkCode() {
+  const input = document.getElementById("eingabe").value.trim();
+  const feedback = document.getElementById("feedback");
+
+  if (parseInt(input) === 4) {
+    try { unlockNext(1); } catch(e){}
+    feedback.innerText = "✅ Richtig! Die erste Ziffer des Codes lautet: 4";
+    feedback.style.color = "green";
+  } else {
+    feedback.innerText = "❌ Noch nicht richtig. Bilde die Summe aller Sauerstoffatome und daraus die Quersumme";
+    feedback.style.color = "red";
+  }
+}
+
+// Drag and Drop-Funktionalität
+document.querySelectorAll(".draggable").forEach(el => {
+  el.addEventListener("dragstart", e => {
+    e.dataTransfer.setData("text/plain", e.target.textContent);
+  });
+});
+
+document.getElementById("dropzone").addEventListener("dragover", e => {
+  e.preventDefault();
+});
+document.getElementById("dropzone").addEventListener("drop", e => {
+  e.preventDefault();
+  const text = e.dataTransfer.getData("text/plain");
+  const newElem = document.createElement("div");
+  newElem.textContent = text;
+  newElem.className = "draggable";
+  newElem.setAttribute("draggable", "true");
+  newElem.addEventListener("click", () => newElem.remove());
+  document.getElementById("dropzone").appendChild(newElem);
+});
+</script>
+
+
+
+
+</section>
+<section class="station" data-step="2">
+
+
+
+
+  <meta charset="UTF-8">
+  <title>Station 2 – Das Geheimnis der Laktase</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #f0fdf4; padding: 2rem; }
+    .task { background: white; padding: 1rem; margin: 2rem auto; border-radius: 15px; max-width: 700px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    .choice-button { padding: 0.5rem 1rem; background: #a5d6a7; margin: 0.5rem; border-radius: 8px; display: inline-block; cursor: pointer; }
+    .choice-button:hover { background: #81c784; }
+    input, button { margin-top: 1rem; padding: 0.5rem; width: 100%; }
+  </style>
+
+
+  <div class="task">
+    <h2>🔮 Station 2 – Das Geheimnis der Laktase</h2>
+    <p>Vier mystische Pergamentrollen enthalten uralte Hinweise zur Struktur eines besonderen Enzyms – der Laktase. Nur wer die Ebenen der Struktur erkennt, kann das Geheimnis lüften.</p>
+    <p><strong>Klicke auf die richtige Lösung.</strong></p>
+<p style="font-style: italic;">🔍 „Am Anfang war die Kette... dann begann sie sich zu winden, faltete sich und wartete still, bis der Milchzucker das aktive Zentrum fand.“</p>
+
+    <div class="choice-container">
+      <div class="choice-button" onclick="s2_verifyStructure('quartär-tertiär-sekundär-primär')">Quartär → Tertiär → Sekundär → Primär</div>
+      <div class="choice-button" onclick="s2_verifyStructure('primär-sekundär-tertiär-quartär')">Primär → Sekundär → Tertiär → Quartär</div>
+      <div class="choice-button" onclick="s2_verifyStructure('sekundär-primär-quartär-tertiär')">Sekundär → Primär → Quartär → Tertiär</div>
+    </div>
+    <p id="structure-feedback" style="text-align:center; font-weight:bold;"></p>
+
+    <div id="input-section" style="display:none;">
+      <label for="input2">🔢 Gib die ermittelte Zahl ein:</label>
+      <input id="input2" type="text" placeholder="Zahl eingeben">
+      <button onclick="s2_checkCode()">Bestätigen</button>
+      <p id="result2"></p>
+    </div>
+  </div>
+
+  <div class="task" id="hilfe2" style="background:#f1f8e9; display:none">
+    <h2>🆘 Hilfekarte Station 2</h2>
+    <p>Die Lösung lautet: Primär → Sekundär → Tertiär → Quartär.<br>
+    Tipp: Zähle die Anzahl des Buchstabens „r“ in den vier Strukturbegriffen (Primär, Sekundär, Tertiär, Quartär).</p>
+  </div>
+  <p><a href="#" onclick="s2_toggleHilfe(); return false;">📘 Hilfekarte ein-/ausblenden</a></p>
+
+  <script>
+  function s2_s2_toggleHilfe() {
+    const root = document.querySelector('.station[data-step="2"]');
+    const hilfe = root.querySelector('#hilfe2');
+    hilfe.style.display = (hilfe.style.display === 'none' || hilfe.style.display === '') ? 'block' : 'none';
+  }
+
+    function s2_verifyStructure(answer) {
+      const root = document.querySelector('.station[data-step="2"]');
+      const feedback = root.querySelector('#structure-feedback');
+      const correct = 'primär-sekundär-tertiär-quartär';
+      if (answer === correct) {
+        feedback.innerHTML = "✔️ Richtig! Du hast den Aufbau entschlüsselt.<br><br><em>🔍 Nächster Hinweis: Zähle die Anzahl des Buchstabens 'r' in den vier Strukturbegriffen (Primär, Sekundär, Tertiär, Quartär). Das Ergebnis ist deine 2. Codeziffer.</em>";
+        feedback.style.color = "green";
+        root.querySelector('#input-section').style.display = 'block';
+        try { root.querySelector('#input3').scrollIntoView({behavior:'smooth', block:'center'}); } catch(e){}
+      } else {
+        feedback.innerHTML = "❌ Leider falsch. Versuche es nochmal oder nutze die Hilfekarte.";
+        feedback.style.color = "red";
+        // root.querySelector('#hilfe2').style.display = 'block';
+      }
+    }
+
+    function s2_checkCode() {
+      const root = document.querySelector('.station[data-step="2"]');
+      const userInput = root.querySelector('#input2').value.trim();
+      const correct = 7;
+      const output = root.querySelector('#result2');
+      if (parseInt(userInput) === correct) {
+        try { unlockNext(2); } catch(e){}
+        output.innerHTML = '✅ Korrekt! Du hast die zweite Ziffer des Codes richtig berechnet.';
+        output.style.color = 'green';
+      } else {
+        output.innerHTML = '❌ Noch nicht richtig. Zähle die Anzahl des Buchstabens "r" in den vier Strukturbegriffen.';
+        output.style.color = 'red';
+      }
+    }
+  </script>
+
+
+
+</section>
+<section class="station" data-step="3">
+
+
+
+
+  <meta charset="UTF-8">
+  <title>Station 3 – Die vier Wächter</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #f9fbe7; padding: 2rem; }
+    .task { background: white; padding: 1rem; margin: 2rem auto; border-radius: 15px; max-width: 700px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    .choice-button { padding: 0.5rem 1rem; background: #c5e1a5; margin: 0.5rem; border-radius: 8px; display: inline-block; cursor: pointer; }
+    .choice-button:hover { background: #aed581; }
+    input, button { margin-top: 1rem; padding: 0.5rem; width: 100%; }
+    #input-section, #zahl-hinweis, #hilfe3 { display: none; }
+  </style>
+
+
+  <div class="task">
+    <h2>🌱 Station 3 – Die vier Wächter</h2>
+    <p><strong>Rätseltext:</strong> In einem alten Laborbuch steht geschrieben:</p>
+    <p style="font-style: italic;">
+      „Vier Wächter wachen über das Wirken der Enzyme.<br>
+      Der erste ist der Wärmegeist – zu heiß, zu kalt, zerstört er das Werk.<br>
+      Der zweite ist der Säurefürst – sein Zorn liegt im Milieu der Umgebung.<br>
+      Der dritte ist der Täuscher – er tritt auf wie ein Schlüssel, doch stiehlt er nur Zeit.<br>
+      Der vierte ist der Unterdrücker – fern vom Zentrum, doch lähmt er das Ganze.“<br>
+      Nur wer ihre Rollen erkennt, kann das Enzym verstehen.
+    </p>
+
+    <p><strong>Klicke die richtige Lösung an:</strong></p>
+
+    <div class="choice-container">
+      <div class="choice-button" onclick="s3_verifyStation3('temperatur-reaktionsmilieu-substratbindung-allosterischeblockade')">Temperatur, Reaktionsmilieu, Substratbindung, allosterische Blockade</div>
+      <div class="choice-button" onclick="s3_verifyStation3('reaktionsmilieu-temperatur-nichtkompetitivehemmung-kompetitivehemmung')">Reaktionsmilieu, Temperatur, nichtkompetitive Hemmung, kompetitive Hemmung</div>
+      <div class="choice-button" onclick="s3_verifyStation3('substrat-wasser-kompetitivehemmung-temperatur')">Substrat, Wasser, kompetitive Hemmung, Temperatur</div>
+      <div class="choice-button" onclick="s3_verifyStation3('temperatur-reaktionsmilieu-kompetitivehemmung-nichtkompetitivehemmung')">Temperatur, Reaktionsmilieu, kompetitive Hemmung, nichtkompetitive Hemmung</div>
+    </div>
+    <p id="feedback3" style="text-align:center; font-weight:bold;"></p>
+
+    <div id="zahl-hinweis" style="margin-top:1rem;">
+      <p><strong>Hinweis:</strong> Nimm jeweils den ersten Buchstaben jeder richtigen Einflussgröße in der Reihenfolge der Antwort. Ersetze jeden Buchstaben durch seine Position im Alphabet (A=1, B=2, ..., Z=26). Addiere diese Zahlen. Die Quersumme dieser Summe ist deine dritte Ziffer. <strong>Die Quersumme muss zweimal gebildet werden.</strong></p>
+    </div>
+
+    <div id="input-section">
+      <label for="input3">🔢 Gib die ermittelte Zahl ein:</label>
+      <input id="input3" type="text" placeholder="Zahl eingeben">
+      <button onclick="s3_checkCode3()">Bestätigen</button>
+      <p id="result3"></p>
+    </div>
+  </div>
+
+  <p><a href="#" onclick="s3_toggleHilfe3(); return false;">📘 Hilfekarte ein-/ausblenden</a></p>
+
+<div class="task" id="hilfe3" style="background:#f1f8e9;">
+    <h2>🆘 Hilfekarte Station 3</h2>
+    <p><strong>Zur Lösung des Rätsels:</strong><br>
+      Temperatur beeinflusst die Molekülbewegung, das Reaktionsmilieu (z. B. pH-Wert) die Ladungsverteilung.<br>
+      Kompetitive Hemmstoffe ähneln dem Substrat und blockieren das Zentrum.<br>
+      Nichtkompetitive Hemmstoffe verändern die Struktur des Enzyms.
+    </p>
+  </div>
+
+  <script>
+  function s3_toggleHilfe3() {
+    const hilfe = root.querySelector('#hilfe3');
+    hilfe.style.display = (hilfe.style.display === 'none' || hilfe.style.display === '') ? 'block' : 'none';
+  }
+
+    function s3_verifyStation3(answer) {
+      const correct = 'temperatur-reaktionsmilieu-kompetitivehemmung-nichtkompetitivehemmung';
+      const root = document.querySelector('.station[data-step="3"]');
+      const feedback = root.querySelector('#feedback3');
+      if (answer === correct) {
+        feedback.innerHTML = "✔️ Richtig! Du hast die vier Wächter entschlüsselt.";
+        feedback.style.color = "green";
+        root.querySelector('#zahl-hinweis').style.display = 'block';
+        root.querySelector('#input-section').style.display = 'block';
+        try { root.querySelector('#input3').scrollIntoView({behavior:'smooth', block:'center'}); } catch(e){}
+        root.querySelector('#hilfe3').style.display = 'none';
+      } else {
+        feedback.innerHTML = "❌ Leider falsch. Die Hilfekarte hilft dir weiter.";
+        feedback.style.color = "red";
+        // root.querySelector('#hilfe3').style.display = 'block';
+      }
+    }
+
+    function s3_checkCode3() {
+      const root = document.querySelector('.station[data-step="3"]');
+      const input = root.querySelector('#input3').value.trim();
+      const correct = 7;
+      const result = root.querySelector('#result3');
+      if (parseInt(input) === correct) {
+        try { unlockNext(3); } catch(e){}
+        result.innerHTML = '✅ Korrekt! Du hast die dritte Ziffer des Codes ermittelt.';
+        result.style.color = 'green';
+      } else {
+        result.innerHTML = '❌ Noch nicht richtig. Überprüfe die Hinweise sorgfältig.';
+        result.style.color = 'red';
+      }
+    }
+  </script>
+
+
+
+</section>
+<section class="station" data-step="4">
+
+
+
+
+  <meta charset="UTF-8" />
+  <title>Escape Game - Station 4</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f2f2f2; padding: 2rem; }
+    .task { background: #fff; padding: 1.5rem; border-radius: 10px; max-width: 700px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    h2 { color: #00695c; }
+    button, .choice-button { padding: 0.6rem 1rem; margin: 0.5rem 0; font-size: 1rem; cursor: pointer; border: none; border-radius: 5px; background: #4db6ac; color: white; }
+    .choice-button:hover { background: #00897b; }
+    .hidden { display: none; }
+    #hilfe4 { background: #e0f2f1; padding: 1rem; margin-top: 1rem; border-radius: 8px; }
+    .success { color: green; }
+    .error { color: red; }
+  </style>
+
+
+  <div class="task">
+    <h2>⚡ Station 4 – Die energetische Barriere</h2>
+    <p><strong>Rätseltext:</strong> Eine mystische Skizze zeigt zwei Wege: einen steilen Berg und einen weichen Tunnel. Darunter steht:</p>
+    <p><em>„Der eine Weg verlangt Kraft, der andere nur den Schlüssel. Doch beide führen ans gleiche Ziel. Nur wer versteht, wie der Helfer wirkt, findet die nächste Ziffer.“</em></p>
+    <p>Welche Aussage beschreibt <strong>korrekt</strong> die Rolle von Enzymen in Bezug auf die Aktivierungsenergie?</p>
+
+    <div>
+      <button class="choice-button" onclick="s4_verifyAnswer('a')">Enzyme erhöhen die Reaktionsgeschwindigkeit, indem sie mehr Energie zuführen.</button><br>
+      <button class="choice-button" onclick="s4_verifyAnswer('b')">Enzyme senken die Aktivierungsenergie und beschleunigen so die Reaktion.</button><br>
+      <button class="choice-button" onclick="s4_verifyAnswer('c')">Enzyme liefern Bindungsenergie und verändern die Reaktionsenthalpie.</button><br>
+      <button class="choice-button" onclick="s4_verifyAnswer('d')">Enzyme machen eine Reaktion nur reversibel, verändern aber nicht die Energie.</button>
+    </div>
+
+    <p id="feedback"></p>
+
+    <div id="zahl-section" class="hidden">
+      <p><strong>Hinweis:</strong> Zähle alle Buchstaben im richtigen Antwortsatz ohne Leerzeichen. Subtrahiere davon die Anzahl der Wörter. Die Quersumme der Differenz ergibt die vierte Ziffer. (Beachte: Quersumme = Quersumme von Quersumme)</p>
+      <label for="input4">🔢 Deine Lösung:</label>
+      <input id="input4" type="text" placeholder="Zahl eingeben">
+      <button onclick="s4_checkCode()">Bestätigen</button>
+      <p id="result4"></p>
+    </div>
+
+    <p><a href="#" onclick="document.getElementById('hilfe4').style.display='block'; return false;">🆘 Hilfekarte anzeigen</a></p>
+    <div id="hilfe4" class="hidden">
+      <h3>🧪 Hilfekarte – Aktivierungsenergie</h3>
+      <p>Enzyme senken die Aktivierungsenergie, wodurch Reaktionen schneller ablaufen können, ohne dass die Reaktionsenthalpie verändert wird.</p>
+    </div>
+  </div>
+
+  <script>
+    function s4_verifyAnswer(ans) {
+      const feedback = document.getElementById('feedback');
+      const correct = 'b';
+      if (ans === correct) {
+        feedback.innerHTML = "✔️ Richtig!";
+        feedback.className = "success";
+        document.getElementById('zahl-section').classList.remove('hidden');
+        try { document.getElementById('zahl-section').scrollIntoView({behavior:'smooth', block:'center'}); } catch(e){}
+      } else {
+        feedback.innerHTML = "❌ Leider falsch.";
+        feedback.className = "error";
+      }
+    }
+
+    function s4_checkCode() {
+      const input = parseInt(document.getElementById('input4').value);
+      const result = document.getElementById('result4');
+      if (input === 9) {
+        try { unlockNext(4); } catch(e){}
+        result.innerHTML = "✅ Korrekt! Die vierte Ziffer des Codes ist 9.";
+        result.className = "success";
+      } else {
+        result.innerHTML = "❌ Leider falsch.";
+        result.className = "error";
+      }
+    }
+  </script>
+
+
+
+</section>
+<section class="station" data-step="5">
+
+
+
+
+  <meta charset="UTF-8">
+  <title>Station 5 – Michaelis-Menten</title>
+  <style>
+    body { font-family: sans-serif; background-color: #f3e5f5; padding: 2rem; }
+    .task { background: white; padding: 1rem; border-radius: 12px; max-width: 700px; margin: auto; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    .choice-button { display: block; margin: 1rem 0; padding: 0.7rem; background: #ce93d8; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; }
+    .choice-button:hover { background-color: #ba68c8; }
+    .hidden { display: none; }
+    .result { font-weight: bold; }
+  </style>
+
+
+  <div class="task">
+    <h2>🧪 Station 5 – Das Gesetz der Geschwindigkeit</h2>
+    <p><em>Ein uraltes Enzymlogbuch ist in deiner Hand. Auf der Innenseite steht:</em></p>
+    <blockquote>
+      „Wenn die Reaktion rast, scheint es, als gäbe es kein Halten. Doch selbst das Schnellste stößt an eine Grenze.<br>
+      Nur wer erkennt, wann der Weg sich flacht, versteht die alte Formel.“<br><br>
+      „Der Schlüssel liegt nicht in der Geschwindigkeit – sondern in dem, was sie zähmt…“
+    </blockquote>
+    <p><strong>Welche Aussage ist korrekt?</strong></p>
+    <button class="choice-button" onclick="s5_checkAnswer('a')">Je höher die Substratkonzentration, desto niedriger ist die Reaktionsgeschwindigkeit.</button>
+    <button class="choice-button" onclick="s5_checkAnswer('b')">Wenn die Substratkonzentration steigt, nähert sich die Reaktion asymptotisch dem Vmax.</button>
+    <button class="choice-button" onclick="s5_checkAnswer('c')">Die Michaelis-Menten-Gleichung beschreibt ausschließlich kompetitive Hemmung.</button>
+    <button class="choice-button" onclick="s5_checkAnswer('d')">Km gibt die Geschwindigkeit an, bei der das Enzym zur Hälfte aktiv ist.</button>
+
+    <p id="feedback5" class="result"></p>
+<p><a href="#" onclick="s5_toggleHilfe5(); return false;">🆘 Hilfekarte ein-/ausblenden</a></p>
+
+
+    <div id="zahl5-section" class="hidden">
+      <p>🔍 <strong>Hinweis:</strong> Zähle die Anzahl der Buchstaben „e“ im gesamten Lösungssatz, den du gewählt hast. </p>
+      <label for="input5">🔢 Deine Lösung:</label>
+      <input id="input5" type="text" placeholder="Zahl eingeben">
+      <button onclick="s5_checkCode()">Bestätigen</button>
+      <p id="result5"></p>
+          </div>
+  </div>
+
+  <div id="hilfe5" class="task hidden" style="background-color:#ede7f6;">
+    <h3>🧾 Hilfekarte Station 5</h3>
+    <p>Michaelis-Menten-Gleichung:</p>
+    <p><code>v = (Vmax · [S]) / (Km + [S])</code></p>
+    <p>Wenn die Substratkonzentration [S] gleich dem Km ist, dann ist v = Vmax / 2.</p>
+  </div>
+
+  <script>
+  function s5_toggleHilfe5() {
+    const hilfe = document.getElementById('hilfe5');
+    hilfe.style.display = (hilfe.style.display === 'none' || hilfe.style.display === '') ? 'block' : 'none';
+  }
+
+    function s5_checkAnswer(answer) {
+      const correct = 'b';
+      const feedback = document.getElementById('feedback5');
+      if (answer === correct) {
+        feedback.textContent = "✔️ Richtig!";
+        feedback.style.color = "green";
+        document.getElementById('zahl5-section').classList.remove('hidden');
+      } else {
+        feedback.textContent = "❌ Leider falsch.";
+        feedback.style.color = "red";
+        // document.getElementById('hilfe5').style.display = 'block';
+      }
+    }
+
+    function s5_checkCode() {
+      const solution = "Wenn die Substratkonzentration steigt, nähert sich die Reaktion asymptotisch dem Vmax.";
+      const numE = (solution.match(/e/gi) || []).length;
+      const qsum = numE.toString().split('').reduce((a,b) => a + parseInt(b), 0);
+      const input = document.getElementById('input5').value.trim();
+      const result = document.getElementById('result5');
+      if (parseInt(input) === qsum) {
+        try { unlockNext(5); } catch(e){}
+        result.innerHTML = "✅ Korrekt! Die fünfte Ziffer des Codes ist " + qsum + ".";
+        result.style.color = 'green';
+      } else {
+        result.innerHTML = "❌ Leider falsch.";
+        result.style.color = 'red';
+      }
+    }
+  </script>
+
+
+
+</section>
+<section class="station" data-step="6">
+
+
+
+
+  <meta charset="UTF-8">
+  <title>Station 6 – Finales Rätsel</title>
+  <style>
+    body { font-family: sans-serif; background-color: #fff3e0; padding: 2rem; }
+    .task { background: white; padding: 1rem; border-radius: 12px; max-width: 700px; margin: auto; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    .choice-button { display: block; margin: 1rem 0; padding: 0.7rem; background: #ffcc80; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; }
+    .choice-button:hover { background-color: #ffb74d; }
+    .hidden { display: none; }
+    .result { font-weight: bold; }
+  </style>
+
+
+  <div class="task">
+    <h2>🧪 Station 6 – Der verschlüsselte Code des Enzyms</h2>
+    <p><em>Du findest ein versiegeltes Reagenzglas mit einer kryptischen Gravur:</em></p>
+    <blockquote>
+      „Nur wer die Sprache der Enzyme spricht, kann den finalen Code knacken.<br>
+      Jeder Satz enthält ein Geheimnis – doch nur einer sagt die Wahrheit.“
+    </blockquote>
+    <p><strong>Welche Aussage ist korrekt?</strong></p>
+    <button class="choice-button" onclick="s6_checkAnswer('a')">Enzyme senken die Reaktionsenthalpie, um eine Reaktion zu starten.</button>
+    <button class="choice-button" onclick="s6_checkAnswer('b')">Der Michaelis-Wert Km hängt direkt vom pH-Wert ab.</button>
+    <button class="choice-button" onclick="s6_checkAnswer('c')">Die Raumstruktur des Enzyms bestimmt, welches Substrat es binden kann.</button>
+    <button class="choice-button" onclick="s6_checkAnswer('d')">Eine nicht-kompetitive Hemmung lässt sich durch eine Substratübersättigung aufheben.</button>
+
+    <p id="feedback6" class="result"></p>
+<p><a href="#" onclick="s6_toggleHilfe6(); return false;">🆘 Hilfekarte ein-/ausblenden</a></p>
+
+
+    <div id="zahl6-section" class="hidden">
+      <p>🔍 <strong>Hinweis:</strong> Rechne den Buchstabenwert von „Substratspezifität“ (A=1, B=2, ..., Z=26).<br>
+      Addiere alle Zahlen – und bilde die Quersumme dieser Summe. Das ist die sechste Ziffer.</p>
+      <label for="input6">🔢 Deine Lösung:</label>
+      <input id="input6" type="text" placeholder="Zahl eingeben">
+      <button onclick="s6_checkCode()">Bestätigen</button>
+      <p id="result6"></p>
+          </div>
+  </div>
+
+  <div id="hilfe6" class="task hidden" style="background-color:#fff8e1;">
+    <h3>🧾 Hilfekarte Station 6</h3>
+    <p>Enzyme sind substratspezifisch, weil ihre Raumstruktur (Tertiär- oder Quartärstruktur) ein spezifisches aktives Zentrum formt.</p>
+    <p>Nur wenn Substrat und Zentrum strukturell zusammenpassen („Schlüssel-Schloss-Prinzip“), funktioniert die Reaktion.</p>
+  </div>
+
+  <script>
+  function s6_toggleHilfe6() {
+    const hilfe = document.getElementById('hilfe6');
+    hilfe.style.display = (hilfe.style.display === 'none' || hilfe.style.display === '') ? 'block' : 'none';
+  }
+
+    function s6_checkAnswer(answer) {
+      const correct = 'c';
+      const feedback = document.getElementById('feedback6');
+      if (answer === correct) {
+        feedback.textContent = "✔️ Richtig!";
+        feedback.style.color = "green";
+        document.getElementById('zahl6-section').classList.remove('hidden');
+      } else {
+        feedback.textContent = "❌ Leider falsch.";
+        feedback.style.color = "red";
+      }
+    }
+
+    function s6_checkCode() {
+      const input = document.getElementById('input6').value.trim();
+      const result = document.getElementById('result6');
+      if (parseInt(input) === 9) {
+        try { unlockNext(6); } catch(e){}
+        result.innerHTML = "✅ Korrekt! Die sechste Ziffer des Codes ist 9.";
+        result.style.color = 'green';
+      } else {
+        result.innerHTML = "❌ Leider falsch.";
+        result.style.color = 'red';
+      }
+    }
+  </script>
+
+
+
+</section>
+<section class="station" data-step="7">
+
+
+
+
+  <meta charset="UTF-8">
+  <title>Escape Game – Mission Enzym: Abschluss</title>
+  <style>
+    body { font-family: sans-serif; background-color: #fff3e0; padding: 2rem; }
+    .task { background: white; padding: 1rem; border-radius: 12px; max-width: 700px; margin: auto; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    .choice-button { display: block; margin: 1rem 0; padding: 0.7rem; background: #ffcc80; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; }
+    .choice-button:hover { background-color: #ffb74d; }
+    .hidden { display: none; }
+    .result { font-weight: bold; }
+  </style>
+
+
+  <h1 style="text-align:center">🎮 Escape Game: Mission Enzym 🎮</h1>
+  <p style="text-align:center">Sechs Rätsel – ein Code. Knackt ihn, um das Enzym zu retten!</p>
+
+  <!-- Station 1-6 bleiben unverändert -->
+
+  <!-- STATION 6: Der verschlüsselte Code des Enzyms (mit Abschlusseingabe) -->
+  <div class="task">
+    <h2>🧪 Abschluss: Der geheime 6-stellige Code</h2>
+    <p><em>Du hast alle Stationen gemeistert. Um das Enzym zu retten, gib den 6-stelligen Code ein:</em></p>
+    <p>Die Ziffern des Codes wurden aus den vorherigen Lösungen berechnet und ergeben:</p>
+    <p><strong>1. Ziffer:</strong> Station 1 – Sortierung von Aminosäuren <br>
+       <strong>2. Ziffer:</strong> Station 2 – Strukturebenen der Aminosäuren <br>
+       <strong>3. Ziffer:</strong> Station 3 – Enzym-Einflussfaktoren <br>
+       <strong>4. Ziffer:</strong> Station 4 – Aktivierungsenergie <br>
+       <strong>5. Ziffer:</strong> Station 5 – Michaelis-Menten <br>
+       <strong>6. Ziffer:</strong> Station 6 – Schlüssel-Schloss-Prinzip</p>
+    <label for="finalCode">🔐 Gib den Code ein:</label>
+    <input id="finalCode" type="text" placeholder="Ziffern eingeben">
+    <button onclick="final_check()">Bestätigen</button>
+    <p id="finalResult"></p>
+  </div>
+
+  <script>
+    // Code der Stationen (Voraussetzung für den Erfolg)
+    const correctCode = "477989";  // Der korrekte 6-stellige Code (jede Ziffer aus den Stationen)
+
+    function final_check() {
+      const inputCode = document.getElementById('finalCode').value.trim();
+      const result = document.getElementById('finalResult');
+
+      if (inputCode === correctCode) {
+        result.innerHTML = "🎉 Herzlichen Glückwunsch! Du hast den Code geknackt und das Enzym gerettet! 🎉";
+        result.style.color = 'green';
+      } else {
+        result.innerHTML = "❌ Leider falsch. Versuch es nochmal.";
+        result.style.color = 'red';
+      }
+    }
+  </script>
+
+
+
+
+</section>
+</main>
+
+<div class="navline">
+  <div class="wrap">
+    <button id="prevBtn" class="nav">◀︎ Zurück</button>
+    <div style="flex:1"></div>
+    <button id="nextBtn" class="nav">Weiter ▶︎</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  const total = 8;
+  let step = 0;
+  const solved = {1:false,2:false,3:false,4:false,5:false,6:false};
+
+  const stations = Array.from(document.querySelectorAll('.station'));
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const label = document.getElementById('stepLabel');
+  const bar = document.getElementById('progressBar');
+
+  window.unlockNext = function(which){
+    solved[which] = true;
+    // Wenn man gerade auf dieser Station ist, Button freischalten
+    if (step === which) {
+      nextBtn.disabled = false;
+      nextBtn.title = '';
+    }
+  }
+
+  function render(){
+    stations.forEach(s => s.classList.remove('active'));
+    const current = document.querySelector('.station[data-step="' + step + '"]');
+    if (current) current.classList.add('active');
+    prevBtn.disabled = (step <= 0);
+    // Next-Button-Logik
+    if (step === 0) { nextBtn.disabled = false; nextBtn.textContent = 'Weiter ▶︎'; nextBtn.title = ''; }
+    else if (step <= 6) {
+      nextBtn.disabled = !solved[step];
+      nextBtn.title = nextBtn.disabled ? 'Löse die Station, um fortzufahren.' : '';
+      nextBtn.textContent = 'Weiter ▶︎';
+    } else {
+      nextBtn.disabled = false;
+      nextBtn.textContent = 'Neustart ⟲';
+      nextBtn.title = '';
+    }
+    label.textContent = (step===0 ? 'Intro' : (step <= 6 ? 'Station ' + step : 'Finale')) + ' / ' + total;
+    bar.style.width = Math.max(0, Math.round((step)/(total-1) * 100)) + '%';
+    window.scrollTo({top: 0, behavior: 'instant'});
+  }
+
+  prevBtn.addEventListener('click', () => { if (step > 1) { step--; render(); } });
+  nextBtn.addEventListener('click', () => {
+    if (step < total) { step++; render(); }
+    else { step = 1; render(); }
+  });
+
+  function initFromHash(){
+    const m = (location.hash || '').match(/step-(\d+)/);
+    if (m) {
+      const n = parseInt(m[1]);
+      if (n >= 1 && n <= total) step = n;
+    }
+  }
+
+  window.addEventListener('hashchange', () => {
+    initFromHash(); render();
+  });
+
+  initFromHash();
+  render();
+})();
+</script>
+
+<script>
+
+/* --- Touch Helpers & Mobile UX --- */
+(function(){
+  // Add tap-to-add for Station 1 draggable items
+  const root1 = document.querySelector('.station[data-step="1"]');
+  if (root1) {
+    const drop = root1.querySelector('#dropzone');
+    if (drop) {
+      const addItemToDrop = (text) => {
+        const newElem = document.createElement('div');
+        newElem.textContent = text;
+        newElem.className = 'draggable';
+        newElem.setAttribute('draggable', 'true');
+        // Tap to remove
+        newElem.addEventListener('click', () => newElem.remove());
+        drop.appendChild(newElem);
+      };
+      root1.querySelectorAll('.draggable').forEach(el => {
+        // If the original item is tapped, clone to dropzone
+        el.addEventListener('click', () => addItemToDrop(el.textContent.trim()));
+        // Basic touchstart to avoid 300ms delay on some browsers
+        el.addEventListener('touchend', (e) => { e.preventDefault(); addItemToDrop(el.textContent.trim()); }, {passive:false});
+      });
+      // Ensure dropzone is scroll-into-view after a successful order check
+      const btn = root1.querySelector('button[onclick^="s1_checkOrder"]') || root1.querySelector('button[onclick^="checkOrder"]');
+      if (btn) {
+        btn.addEventListener('click', () => {
+          try { drop.scrollIntoView({behavior:'smooth', block:'center'}); } catch(e){}
+        });
+      }
+    }
+  }
+
+  // Avoid footer covering focused inputs: when focusing input, add extra body padding (small devices)
+  const padOnFocus = (e) => {
+    const isSmall = window.matchMedia('(max-width: 640px)').matches;
+    if (!isSmall) return;
+    document.body.style.paddingBottom = '280px';
+    setTimeout(() => {
+      try { e.target.scrollIntoView({behavior:'smooth', block:'center'}); } catch(ex){}
+    }, 50);
+  };
+  const clearPad = () => {
+    document.body.style.paddingBottom = '';
+  };
+  document.addEventListener('focusin', (e) => {
+    if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA')) {
+      padOnFocus(e);
+    }
+  });
+  document.addEventListener('focusout', clearPad);
+})();
+
+</script>
+</body>
+</html>
